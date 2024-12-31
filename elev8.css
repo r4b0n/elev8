@@ -1,0 +1,560 @@
+/*--------------------- Globals ---------------------*/
+:root {
+  --color-strawberry: #dd5da2;
+  --color-guava: #99a138;
+  --color-sg-bg: #f9dce9;
+  --color-peach: #f29520;
+  --color-pitaya: #ed1943;
+  --color-pp-bg: #ffedd5;
+  --color-pineapple: #edcb19;
+  --color-mango: #f29520;
+  --color-pm-bg: #fdfbe4;
+  --color-teal: #068888;
+  --color-light-teal: #d4eded;
+}
+:focus {
+  outline: none;
+}
+::-moz-focus-inner {
+  border: 0;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Outfit', serif;
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
+}
+
+html {
+  background-color: var(--color-teal);
+  scroll-padding-top: 10rem;
+  scroll-behavior: smooth;
+  --scrollbarBG: var(--color-teal);
+  --thumbBG: var(--color-light-teal);
+  scrollbar-width: thin;
+  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+  &::-webkit-scrollbar-track {
+    background: var(--scrollbarBG);
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--thumbBG);
+    border-radius: 6px;
+    border: 3px solid var(--scrollbarBG);
+  }
+}
+
+.elev8 {
+  overflow: hidden;
+}
+
+#canvas {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+}
+
+.clamp-xl {
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: clamp(1rem, 5vw, 3rem);
+}
+
+.clamp-lg {
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  line-height: clamp(1.5rem, 5vw, 3rem);
+}
+
+.clamp-md {
+  font-size: clamp(1rem, 4vw, 1.5rem);
+  line-height: clamp(1.5rem, 4vw, 2rem);
+}
+
+.clamp-md-lg {
+  font-size: clamp(1.4rem, 3vw, 1.7rem);
+  line-height: clamp(1.4rem, 3vw, 1.7rem);
+}
+
+.clamp-sm {
+  font-size: clamp(0.9rem, 3vw, 1.2rem);
+  line-height: clamp(1.2rem, 3vw, 1.5rem);
+}
+
+.hide {
+  visibility: hidden !important;
+}
+
+.sg {
+  background-color: var(--color-sg-bg);
+  color: var(--color-strawberry);
+}
+
+.pp {
+  background-color: var(--color-pp-bg);
+  color: var(--color-peach);
+}
+
+.pm {
+  background-color: var(--color-pm-bg);
+  color: var(--color-pineapple);
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+  user-select: none;
+}
+
+button.buy-online {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4rem;
+  padding: 1rem 2rem;
+  margin: 2rem 2rem 0;
+  text-transform: uppercase;
+}
+
+.sg button.buy-online {
+  border: 2px solid var(--color-strawberry);
+}
+
+.pp button.buy-online {
+  border: 2px solid var(--color-peach);
+}
+
+.pm button.buy-online {
+  border: 2px solid var(--color-pineapple);
+}
+
+.sg button.buy-online:hover {
+  border: 2px solid var(--color-guava);
+  background-color: var(--color-guava);
+  color: var(--color-sg-bg);
+}
+
+.pp button.buy-online:hover {
+  border: 2px solid var(--color-pitaya);
+  background-color: var(--color-pitaya);
+  color: var(--color-pp-bg);
+}
+
+.pm button.buy-online:hover {
+  border: 2px solid var(--color-mango);
+  background-color: var(--color-mango);
+  color: var(--color-pm-bg);
+}
+
+.buy {
+  color: var(--color-light-teal);
+  background-color: var(--color-teal);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 25px;
+  text-decoration: none;
+  text-transform: uppercase;
+  gap: 0.3rem;
+}
+
+.buy:hover {
+  color: white;
+}
+
+nav {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  padding: 0.5rem 0;
+  box-sizing: border-box;
+  z-index: 100;
+}
+
+nav svg,
+nav img {
+  height: 100px;
+}
+
+.sg nav svg {
+  fill: var(--color-strawberry);
+}
+
+.pp nav svg {
+  fill: var(--color-peach);
+}
+
+.pm nav svg {
+  fill: var(--color-pineapple);
+}
+
+.content {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+
+.carousel-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  margin-top: 0;
+  gap: clamp(2rem, 10vw, 4rem);
+}
+
+.content .carousel-container .carousel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 45%;
+  gap: clamp(2rem, 10vw, 10rem);
+}
+
+.content .carousel-container h2,
+.content .carousel-container h1 {
+  font-weight: normal;
+  font-size: clamp(1.5rem, 4vw, 2.4rem);
+  line-height: clamp(1.5rem, 4vw, 2.4rem);
+  text-align: center;
+  margin: 0;
+}
+
+.sg .activ8 ul li span,
+.sg .content .carousel-container h2 span {
+  color: var(--color-guava);
+}
+
+.pp .activ8 ul li span,
+.pp .content .carousel-container h2 span {
+  color: var(--color-pitaya);
+}
+
+.pm .activ8 ul li span,
+.pm .content .carousel-container h2 span {
+  color: var(--color-mango);
+}
+
+.content .carousel-container .carousel .arrow {
+  font-size: 4rem;
+}
+
+.sg .content .carousel-container .carousel .arrow:hover {
+  color: var(--color-guava);
+}
+
+.pp .content .carousel-container .carousel .arrow:hover {
+  color: var(--color-pitaya);
+}
+
+.pm .content .carousel-container .carousel .arrow:hover {
+  color: var(--color-mango);
+}
+
+.content .carousel-container .carousel img {
+  width: auto;
+  height: 100%;
+}
+
+.spin,
+.activ8 {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.activ8 > svg {
+  height: clamp(35px, 4vw, 55px);
+  margin-top: clamp(2rem, 4vw, 4rem);
+}
+
+.sg .activ8 > svg {
+  fill: var(--color-strawberry);
+}
+
+.pp .activ8 > svg {
+  fill: var(--color-peach);
+}
+
+.pm .activ8 > svg {
+  fill: var(--color-pineapple);
+}
+
+.activ8 ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  list-style: none;
+  margin: 2rem 2rem 0;
+  padding: 0;
+  max-width: 700px;
+}
+
+.activ8 ul:nth-child(2) {
+  flex-flow: wrap;
+  gap: 2rem;
+  max-width: 375px;
+}
+
+.activ8 ul li {
+  text-align: center;
+}
+
+.activ8 ul li svg {
+  width: 80px;
+}
+
+.activ8 ul.icons {
+  flex-flow: row wrap;
+  max-width: unset !important;
+  gap: clamp(2rem, 4vw, 5rem);
+}
+
+.sg .activ8 ul.icons svg {
+  fill: var(--color-strawberry);
+}
+
+.pp .activ8 ul.icons svg {
+  fill: var(--color-peach);
+}
+
+.pm .activ8 ul.icons svg {
+  fill: var(--color-pineapple);
+}
+
+.spin {
+  padding: clamp(2rem, 10vw, 5rem);
+}
+
+.spin-anim {
+  position: relative;
+  width: 284px;
+  height: 500px;
+  overflow: hidden;
+}
+
+.spin-anim img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: auto;
+  height: 100%;
+}
+
+.spin .scrubber {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  margin-top: 2rem;
+  max-width: 700px;
+}
+
+.spin .scrubber .track {
+  position: absolute;
+  left: 50%;
+  width: 90%;
+  height: 2px;
+  margin-left: calc(-90% / 2);
+}
+
+.sg .spin .scrubber .track {
+  background-color: var(--color-strawberry);
+}
+
+.pp .spin .scrubber .track {
+  background-color: var(--color-peach);
+}
+
+.pm .spin .scrubber .track {
+  background-color: var(--color-pineapple);
+}
+
+.spin .scrubber .drag {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+}
+
+.spin .scrubber .drag > svg {
+  position: relative;
+  width: 60px;
+  height: 60px;
+}
+
+.sg .spin .scrubber .drag path {
+  fill: var(--color-strawberry);
+}
+
+.sg .spin .scrubber .drag:hover path {
+  fill: var(--color-guava);
+}
+
+.pp .spin .scrubber .drag:hover path {
+  fill: var(--color-pitaya);
+}
+
+.pm .spin .scrubber .drag:hover path {
+  fill: var(--color-mango);
+}
+
+.pp .spin .scrubber .drag path {
+  fill: var(--color-peach);
+}
+
+.pm .spin .scrubber .drag path {
+  fill: var(--color-pineapple);
+}
+
+.sg .spin .scrubber .drag circle {
+  fill: var(--color-sg-bg);
+}
+
+.pp .spin .scrubber .drag circle {
+  fill: var(--color-pp-bg);
+}
+
+.pm .spin .scrubber .drag circle {
+  fill: var(--color-pm-bg);
+}
+
+footer {
+  position: relative;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  padding: 2rem;
+  background-color: var(--color-teal);
+  color: var(--color-light-teal);
+  box-sizing: border-box;
+  user-select: none;
+}
+
+footer > svg {
+  height: 75px;
+  fill: var(--color-light-teal);
+}
+
+footer .copyright {
+  position: absolute;
+  left: 2rem;
+  margin: 0;
+  font-size: 0.7rem;
+}
+
+footer .social {
+  position: absolute;
+  right: 2rem;
+  display: flex;
+  flex-direction: row nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+footer .social a {
+  all: unset;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+footer .social a:hover {
+  color: white;
+}
+
+.loader {
+  position: absolute;
+  top: calc(50% - 75px);
+  left: calc(50% - 75px);
+  width: 150px;
+  height: 150px;
+}
+.loader.hide {
+  display: none;
+}
+
+.rotate {
+  animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (min-width: 576px) {
+  .carousel-container {
+    margin-top: 2rem;
+  }
+  .content .carousel-container .carousel {
+    height: 50%;
+  }
+  button.buy-online,
+  .activ8 ul {
+    margin: 3rem 3rem 0;
+  }
+}
+@media (min-width: 768px) {
+  .carousel-container {
+    margin-top: 4rem;
+  }
+  .content .carousel-container .carousel {
+    height: 55%;
+  }
+  button.buy-online,
+  .activ8 ul {
+    margin: 4rem 4rem 0;
+  }
+  .spin .scrubber {
+    margin-top: 4rem;
+  }
+}
+@media (min-width: 992px) {
+  button.buy-online,
+  .activ8 ul {
+    margin: 5rem 5rem 0;
+  }
+  .spin .scrubber {
+    margin-top: 6rem;
+  }
+}
+
+@media (max-width: 768px) {
+  footer {
+    gap: 2rem;
+  }
+  footer .copyright {
+    position: relative;
+    left: unset;
+  }
+  footer .social {
+    position: relative;
+    right: unset;
+  }
+}
