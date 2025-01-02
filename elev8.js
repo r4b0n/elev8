@@ -2,7 +2,7 @@ init = () => {
   gsap.registerPlugin(Draggable, InertiaPlugin, ScrollTrigger)
   ScrollTrigger.normalizeScroll(true)
   resetScrollTrigger()
-  let sg_frame_count = 125
+  let sg_frame_count = 118
   let selection = 0
   const flavors = [
     {
