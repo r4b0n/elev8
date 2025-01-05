@@ -34,8 +34,6 @@ init = () => {
     // },
   ]
   let images = []
-  let sg_images = []
-  let anim_images = []
   flavors.forEach((flavor) => {
     images.push(flavor.can)
     images.push(flavor.spin)
@@ -49,13 +47,6 @@ init = () => {
       img.src = img_src
       flavors[i].images.push(img)
     }
-  }
-  for (let ii = 0; ii < frame_count; ii++) {
-    let img_src = 'sg_png/sg_' + ii + '.png'
-    sg_images.push(img_src)
-    const img = new Image()
-    img.src = img_src
-    anim_images.push(img)
   }
   const canvas = document.querySelector('#canvas')
   const context = canvas.getContext('2d')
