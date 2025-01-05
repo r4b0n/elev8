@@ -2,31 +2,37 @@ init = () => {
   gsap.registerPlugin(Draggable, InertiaPlugin, ScrollTrigger)
   ScrollTrigger.normalizeScroll(true)
   resetScrollTrigger()
-  let sg_frame_count = 118
+  let frame_count = 118
   let selection = 0
+  let image_preload_count = 0
+  let tl_sprite
+  let tl_flavors_anim
   const flavors = [
     {
       name: 'Strawberry Guava',
       can: 'can_sg.png',
       spin: 'spin_sg.jpg',
+      frame: 0,
+      images: [],
       class: 'sg',
     },
     {
       name: 'Peach Pitaya',
       can: 'can_pp.png',
       spin: 'spin_pp.jpg',
+      frame: 0,
+      images: [],
       class: 'pp',
     },
-    {
-      name: 'Pineapple Mango',
-      can: 'can_pm.png',
-      spin: 'spin_pm.jpg',
-      class: 'pm',
-    },
+    // {
+    //   name: 'Pineapple Mango',
+    //   can: 'can_pm.png',
+    //   spin: 'spin_pm.jpg',
+    //   frame: 0,
+    //   images: [],
+    //   class: 'pm',
+    // },
   ]
-  const sg_anim = {
-    frame: 0,
-  }
   let images = []
   let sg_images = []
   let anim_images = []
@@ -34,14 +40,23 @@ init = () => {
     images.push(flavor.can)
     images.push(flavor.spin)
   })
-  for (let i = 0; i < sg_frame_count; i++) {
-    let img_src = 'sg_png/sg_' + i + '.png'
+  for (let i = 0; i < 2; i++) {
+    for (let ii = 0; ii < frame_count; ii++) {
+      let img_src =
+        flavors[i].class + '_png/' + flavors[i].class + '_' + ii + '.png'
+      images.push(img_src)
+      const img = new Image()
+      img.src = img_src
+      flavors[i].images.push(img)
+    }
+  }
+  for (let ii = 0; ii < frame_count; ii++) {
+    let img_src = 'sg_png/sg_' + ii + '.png'
     sg_images.push(img_src)
     const img = new Image()
     img.src = img_src
     anim_images.push(img)
   }
-  images.push(...sg_images)
   const canvas = document.querySelector('#canvas')
   const context = canvas.getContext('2d')
   canvas.width = 2160
@@ -85,6 +100,11 @@ init = () => {
       flavor.childNodes[0].nodeValue = name[0] + ' '
       flavor.childNodes[1].firstChild.nodeValue = name[1]
       document.querySelector('.elev8').classList.add(flavors[selection].class)
+
+      ScrollTrigger.getById('flavors').kill(true)
+
+      tl_flavors_anim.kill()
+      createFlavorsAnim()
     })
   })
 
@@ -103,8 +123,6 @@ init = () => {
   const bounds = document.querySelector('.scrubber')
   const drag = document.querySelector('.drag')
   const limit = bounds.offsetWidth - drag.offsetWidth
-  let image_preload_count = 0
-  let tl_sprite
   // preload image assets
   function imageLoaded() {
     image_preload_count += 1
@@ -118,6 +136,7 @@ init = () => {
         can.src = flavors[selection].can
         spin_sprite.src = flavors[selection].spin
         spin_sprite.style.width = sprite_width + 'px'
+        createFlavorsAnim()
         render()
         clearTimeout(t_out)
       }, loading_duration)
@@ -130,9 +149,13 @@ init = () => {
     this_image.onLoad = imageLoaded()
   }
   function render() {
+    // console.log(
+    //   'rendering',
+    //   flavors[selection].images[flavors[selection].frame]
+    // )
     context.clearRect(0, 0, canvas.width, canvas.height)
     context.drawImage(
-      anim_images[sg_anim.frame],
+      flavors[selection].images[flavors[selection].frame],
       0,
       0,
       canvas.width,
@@ -154,20 +177,42 @@ init = () => {
     gsap.set(drag, { x: bounds.offsetWidth / 2 - drag.offsetWidth / 2 })
     resetScrollTrigger()
     window.scrollTo(0, 0)
+    render()
   }
-  gsap.to(sg_anim, {
-    frame: sg_frame_count - 1,
-    snap: 'frame',
-    ease: 'none',
-    scrollTrigger: {
-      trigger: '.elev8',
-      scrub: 0.5,
-      pin: true,
-      start: 'top top',
-      end: '+=4000',
-    },
-    onUpdate: render, // use animation onUpdate instead of scrollTrigger's onUpdate
-  })
+  // const line_tl = gsap.timeline({
+  //   delay: 1,
+  //   yoyo: true,
+  //   repeat: -1,
+  //   repeatDelay: 1,
+  // })
+  // line_tl.add('start', '>')
+  // line_tl.set('.line', { drawSVG: '100% 100%' }, 'start')
+  // line_tl.to('.line', { duration: 2, drawSVG: '0% 100%', ease: 'none' }, '>')
+  // const angle_tl = gsap.timeline({
+  //   delay: 1,
+  //   yoyo: true,
+  //   repeat: -1,
+  //   repeatDelay: 1,
+  // })
+  // angle_tl.add('start', '>')
+  // angle_tl.set('.angle', { drawSVG: '50% 50%' }, 'start')
+  // angle_tl.to('.angle', { duration: 2, drawSVG: '0% 100%', ease: 'none' }, '>')
+  const createFlavorsAnim = () => {
+    tl_flavors_anim = gsap.timeline({}).to(flavors[selection], {
+      frame: frame_count - 1,
+      snap: 'frame',
+      ease: 'none',
+      scrollTrigger: {
+        id: 'flavors',
+        trigger: '.elev8',
+        scrub: 0.5,
+        pin: true,
+        start: 'top top',
+        end: '+=4000',
+      },
+      onUpdate: render, // use animation onUpdate instead of scrollTrigger's onUpdate
+    })
+  }
   Draggable.create(drag, {
     bounds,
     edgeResistance: 0.95,
