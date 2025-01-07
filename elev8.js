@@ -38,7 +38,7 @@ init = () => {
     images.push(flavor.can)
     images.push(flavor.spin)
   })
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < flavors.length; i++) {
     for (let ii = 0; ii < frame_count; ii++) {
       let img_src =
         flavors[i].class + '_png/' + flavors[i].class + '_' + ii + '.png'
@@ -236,7 +236,14 @@ init = () => {
   handleResize()
 }
 
-window.onload = init()
+function DOMLoaded() {
+  document.addEventListener('DOMContentLoaded', function () {
+    console.log('DOM fully loaded and parsed')
+    init()
+  })
+}
+
+window.onload = DOMLoaded()
 
 function detectTouch() {
   if (typeof window !== 'undefined') {
