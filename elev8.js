@@ -118,7 +118,7 @@ init = () => {
   function imageLoaded() {
     image_preload_count += 1
     if (image_preload_count == images.length) {
-      console.log('all images loaded')
+      console.log('all images are loaded')
       let t_out = setTimeout(() => {
         canvas.classList.remove('hide')
         nav.classList.remove('hide')
