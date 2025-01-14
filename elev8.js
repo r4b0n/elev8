@@ -41,7 +41,7 @@ init = () => {
   for (let i = 0; i < flavors.length; i++) {
     for (let ii = 0; ii < frame_count; ii++) {
       let img_src =
-        flavors[i].class + '_png/' + flavors[i].class + '_' + ii + '.png'
+        flavors[i].class + '_webp/' + flavors[i].class + '_' + ii + '.webp'
       images.push(img_src)
       const img = new Image()
       img.src = img_src
