@@ -10,16 +10,16 @@ init = () => {
   const flavors = [
     {
       name: 'Strawberry Guava',
-      can: 'can_sg.png',
-      spin: 'spin_sg.jpg',
+      can: 'can_sg.webp',
+      spin: 'spin_sg.webp',
       frame: 0,
       images: [],
       class: 'sg',
     },
     {
       name: 'Peach Pitaya',
-      can: 'can_pp.png',
-      spin: 'spin_pp.jpg',
+      can: 'can_pp.webp',
+      spin: 'spin_pp.webp',
       frame: 0,
       images: [],
       class: 'pp',
