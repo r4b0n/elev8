@@ -48,6 +48,8 @@ init = () => {
       flavors[i].images.push(img)
     }
   }
+  const year = new Date().getFullYear()
+  document.querySelector('.year').textContent = ' ' + year
   const canvas = document.querySelector('#canvas')
   const context = canvas.getContext('2d')
   canvas.width = 2160
