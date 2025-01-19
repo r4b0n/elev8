@@ -24,14 +24,14 @@ init = () => {
       images: [],
       class: 'pp',
     },
-    // {
-    //   name: 'Pineapple Mango',
-    //   can: 'can_pm.png',
-    //   spin: 'spin_pm.jpg',
-    //   frame: 0,
-    //   images: [],
-    //   class: 'pm',
-    // },
+    {
+      name: 'Pineapple Mango',
+      can: 'can_pm.webp',
+      spin: 'spin_pm.webp',
+      frame: 0,
+      images: [],
+      class: 'pm',
+    },
   ]
   let images = []
   flavors.forEach((flavor) => {
@@ -93,9 +93,7 @@ init = () => {
       flavor.childNodes[0].nodeValue = name[0] + ' '
       flavor.childNodes[1].firstChild.nodeValue = name[1]
       document.querySelector('.elev8').classList.add(flavors[selection].class)
-
       ScrollTrigger.getById('flavors').kill(true)
-
       tl_flavors_anim.kill()
       createFlavorsAnim()
     })
